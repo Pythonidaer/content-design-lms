@@ -101,8 +101,12 @@ Tests verify course readiness, embedded parity, bounded slides, source mapping, 
 
 Phase 1: deploy to Vercel and test login, hidden voice access, refresh, sign out and real session startup. Phase 2: investigate the reported audio cutoff while the session remains connected, including with microphone muted. The first supplied hosted trace identified `response.done` → `incomplete` → `max_output_tokens`. The response budget has since been raised from 256 (768 for read-aloud) to 2,048 across helper, hosted session, browser updates and explicit readings. The fix needs a fresh real-device test; other audio/transport causes are not ruled out. No timeout behavior changed.
 
-The voice modal includes **Connection diagnostics → Copy diagnostics**. These in-memory events record response completion/reason, connection state and audio playback/track events, never slide text, notes, transcript, API keys, cookies, SDP or recordings. Vercel function logs contain event, status, duration and a request ID. See [voice monitoring guide](docs/VOICE_MONITORING.md) for the first debugging exercise.
+The voice modal includes **Usage and diagnostics → Copy diagnostics**. These in-memory events record response completion/reason, connection state and audio playback/track events, never slide text, notes, transcript, API keys, cookies, SDP or recordings. Vercel function logs contain event, status, duration and a request ID. See [voice monitoring guide](docs/VOICE_MONITORING.md) for the first debugging exercise.
 
 ### Login setup errors
 
 A server-setup error is not an incorrect-password result: configuration is checked before password verification. The login now names missing variables or password/signing-secret minimum lengths, without displaying their values. If all three variables were added, check that they are assigned to Production in the same Vercel project and redeploy after changing them. Verify that the browser is on the latest Production deployment, rather than an older preview URL. The Show password button changes only the input display and resets to hidden on submit/close.
+
+### Voice dialog design
+
+The modal follows the three AI design reset files in [llm-instruction-toolkit](https://github.com/Pythonidaer/llm-instruction-toolkit/tree/main/design/ai-design-reset), reviewed at 8fcbf905152c911f2350b9bb6105a1ca3a3de5ab. Show the duration, a short privacy/cost notice and the Start action first. Transcript, usage and diagnostic detail are collapsed, while Sign out is a quiet footer action. Voice CSS has a single component section instead of accumulated overrides. Audio configuration and lifecycle are unchanged by this design pass.

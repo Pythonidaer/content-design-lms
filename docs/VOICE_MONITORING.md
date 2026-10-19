@@ -1,37 +1,33 @@
-# Voice monitoring: first investigation
+# Voice monitoring
 
-The reported bug is still open: audio stops mid-word with AirPods and microphone muted while the session timer continues. The first hosted trace confirms a response limit: `response.done` was `incomplete` with `max_output_tokens` at 03:23:07.623 UTC, audio drained at 03:23:13.820, and the user ended the still-connected call at 03:23:26.260. This identifies the cause in that session. The output budget is now 2,048; verify with a fresh session before declaring the symptom resolved on the device. Moving to Vercel alone was not the fix.
+## Test the hosted workflow
 
-## Establish the hosted workflow
+Verify password login, microphone icon visibility after refresh, session startup, read-aloud, End and Sign out. Automated tests use mocks; device audio and production delivery require manual review.
 
-Verify password login, icon visibility after refresh, anonymous API rejection, token creation, and sign out first. Keep the one-minute default session and existing usage thresholds. No billable model calls were made by automated tests. Device audio routing and real Vercel delivery require manual review.
+## Monitoring and observability
 
-## Monitoring versus observability
+Monitoring tells us whether a request succeeded and how long it took. Observability helps explain a failure using response, connection and playback signals together.
 
-Monitoring tells us whether requests succeeded and how long they took. Observability helps explain a failure by correlating response events, connection state and audio playback behavior.
-
-| Signal | Where to look | What it can tell us |
+| Signal | Location | Purpose |
 | --- | --- | --- |
-| Login/token request status and duration | Vercel project → Logs | Backend startup, configuration, authentication or upstream failures |
-| Request ID | API response header/body and `api.session` diagnostic | Match a successful token request to its server log |
-| `response.done` status/reason | Modal → Connection diagnostics | Complete, incomplete or cancelled generation; output-limit reason if supplied |
-| `audio.pause`, `audio.waiting`, `audio.stalled`, `audio.error` | Connection diagnostics | Playback interruption signals; events alone do not prove a cause |
-| `remote.track.mute`, `peer.state`, `channel.closed` | Connection diagnostics | Track/transport interruptions |
-| `session.stopped` reason | Connection diagnostics | Application timeout, explicit End, cost threshold or backgrounding |
-| Dollar spend | OpenAI usage dashboard | Actual billed API usage; app usage is an estimate |
+| Request status and duration | Vercel project logs | Find configuration, authentication or upstream failures |
+| Request ID | API response and diagnostics | Correlate token creation with backend logs |
+| Response status and completion reason | Usage and diagnostics | Distinguish completed, incomplete, cancelled and failed responses |
+| Playback and track events | Usage and diagnostics | Identify playback or transport changes |
+| Session stop reason | Usage and diagnostics | Identify a timer, explicit End or other application stop |
+| Actual API spend | OpenAI usage dashboard | Compare billing with the app's estimated cost |
 
-## Reproduce without guessing
+## Investigate a cutoff
 
-1. Start a one-minute hosted session on a known slide. Keep the microphone muted and select Read this slide. Stay on the page.
-2. If audio cuts off, note approximately when and whether text keeps growing. Before ending, open the microphone setup and copy Connection diagnostics.
-3. Record browser/version, AirPods versus computer speaker, and whether the microphone was muted. Repeat once using computer speakers to compare. Do not repeatedly incur charges if one trace already isolates a cause.
-4. Match the response completion reason and media/connection events. An incomplete generation is different from complete text whose audio playback was interrupted. No event is proof without the reproduction timing.
-5. Change the implicated behavior and rerun the same case. Avoid changing output budgets, timers and playback routing simultaneously.
+1. Use one slide and a repeatable question. Keep the page open during the test.
+2. If speech stops unexpectedly, open Usage and diagnostics and copy diagnostics before starting another session.
+3. Compare generation completion with playback and connection events. An incomplete response differs from completed generation whose playback was interrupted.
+4. Change one implicated behavior, then repeat the same case.
 
-Diagnostics are held in memory, reset at session start and capped at 160 events. They exclude transcripts, slide text, notes, keys, tokens, cookies, IP addresses, SDP and audio recordings. Copying diagnostics does not automatically upload them. Vercel server logs include only event name, request ID, status and duration. They do not receive browser audio/playback logs; share a copied trace explicitly to correlate it. Vercel logs cover token creation, not the ongoing peer-to-peer audio stream.
+The response ceiling is 2,048 tokens per reply. A higher ceiling can permit more generation and spending; brief-answer instructions and existing session/usage controls remain in place. Diagnostics include the configured ceiling so the tested version can be checked.
 
-Instance-local login/token throttling is not a durable global quota. Configure Vercel Firewall rules for login/API abuse protection and keep OpenAI project spending controls. No external analytics or monitoring subscription is added.
+## Privacy and limits
 
-## What this trace taught us
+Browser diagnostics stay in memory, reset at session start and are capped at 160 events. They exclude transcripts, slide text, notes, credentials, SDP, recordings and IP addresses. Copying does not upload them automatically. Backend logs include only event name, request ID, HTTP status and duration. Backend logs cover token creation, not the ongoing audio stream. Review copied logs before sharing them; detailed session traces do not belong in a public repository without explicit permission.
 
-The session remained connected after the response ended. Response generation finished at the configured token ceiling, then already-buffered audio played for about six more seconds. There was no track, peer or playback failure event before that cutoff. That is stronger evidence for generation truncation than an AirPods routing failure in this trace. Text and audio generation have output budgets; a short text-sized ceiling can be too small for speech. Raising the ceiling allows more generation and can increase actual spend, while brief-response instructions and existing session/spend controls remain in place.
+Instance-local throttling is not a global quota. Use Vercel Firewall controls for durable API abuse protection and OpenAI project spending controls. No external monitoring subscription is required for these initial checks.
