@@ -1,6 +1,6 @@
 const http=require('node:http'),fs=require('node:fs/promises'),path=require('node:path'),os=require('node:os');
 const {session}=require('./voice-config.js');
-const publicFiles=new Set(['index.html','lms.css','content-theme.css','lms-runtime.js','lesson-markdown.js','voice-config.js','voice.js','vendor/marked.umd.js','course.json','source-manifest.json']);
+const publicFiles=new Set(['index.html','lms.css','content-theme.css','lms-runtime.js','lesson-markdown.js','voice-config.js','voice-access.js','voice.js','vendor/marked.umd.js','course.json','source-manifest.json']);
 function createServer({apiFetch=fetch,apiKey=process.env.OPENAI_API_KEY,configPath=path.join(os.homedir(),'.config','content-design-lms','voice.json')}={}){
 return http.createServer(async(req,res)=>{
  const host=req.headers.host||'';const trusted=/^(127\.0\.0\.1|localhost):\d+$/.test(host);if(!trusted){res.writeHead(403);res.end('Local access only.');return}

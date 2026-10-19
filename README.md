@@ -27,7 +27,31 @@ Borrowed from GraphQL LMS: collapsible outline, slide player, notes, completion,
 
 The white/black/blue/green/yellow palette is inspired by the GOV.UK Design System. No crown, government wordmark, or proprietary government typeface is used. The existing shared frosted header, SVG controls, readable mobile inputs, plain numbering, and no-emoji rules are preserved.
 
+## Private voice on Vercel
+
+The course stays public. Voice is private and its microphone icon is hidden until server-verified login. No database is needed. A signed HttpOnly/Secure/SameSite=Strict cookie remembers login for 12 hours. The shortcut is a UI convenience, not an access control: direct API requests require the signed cookie too.
+
+1. Import `Pythonidaer/content-design-lms` at https://vercel.com/new . Use **Other**, repository root, and Node 22. `vercel.json` supplies the build command and `site-dist` output. Source API functions live in `api/`; only the public allowlist is copied to the static output. The Vercel build uses committed/generated curriculum files; run `npm run build` locally when editing the course.
+2. Add these server-only environment variables in Vercel, then deploy:
+
+| Variable | Value |
+| --- | --- |
+| `OPENAI_API_KEY` | Your OpenAI `sk-` API key |
+| `VOICE_PASSWORD` | A unique password, at least 16 characters |
+| `VOICE_SESSION_SECRET` | A random signing secret, at least 32 characters |
+
+Generate a signing secret on your computer with `node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"`. Never prefix these variables with `NEXT_PUBLIC_` or `VITE_`, commit them, or paste them into chat. Use Vercel's Secret option if available. Environment changes require redeployment. Optional `APP_ORIGIN` pins POST requests to one exact origin, such as `https://your-course.vercel.app` without a trailing slash; omit it to use the request's origin and allow Vercel preview deployments.
+
+3. Visit the deployed site. Press **Ctrl+Shift+L** (Windows/Linux) or **Cmd+Shift+L** (Mac). If the browser intercepts that shortcut, or you are on mobile, open `https://YOUR-VERCEL-DOMAIN/#voice-login` instead.
+4. Enter `VOICE_PASSWORD`. The microphone icon appears. Click it and Start conversation; no API-key entry or local process is needed. Sign out is in the voice modal. Login expiry is verified whenever a new voice token is requested. Signing out clears this browser's cookie and stops its active call; it does not revoke a copied cookie or another browser's active call. Rotating either the password or signing secret invalidates existing cookies for future requests.
+5. Test: anonymous visitors see no voice icon; wrong password fails; correct password reveals the icon; refresh remembers login; start/read/end works; sign out hides the icon and stops audio. Do not infer the audio cutoff is resolved just because deployment succeeds.
+
+The browser gets only a short-lived OpenAI token. Vercel handles login and token creation; established WebRTC audio flows directly between the browser and OpenAI. Same-origin POST checks, bounded JSON input, timing-safe password comparison and instance-local throttles are included. Serverless instances do not share those throttles: use Vercel Firewall rate limiting for durable brute-force protection and OpenAI project spend controls. No shared anonymous token endpoint is deployed.
+
+GitHub Pages remains a static alternative, using the local helper described below. Existing progress/notes are per-origin: moving from GitHub Pages or localhost to Vercel does not automatically transfer them.
+
 ## Voice setup
+
 
 The header microphone icon opens voice setup. The tutor receives current visible slide text, not notes, hidden slides or ChatGPT history. Setup closes once connected so the slide stays visible. The active bar contains microphone, read-aloud and end controls; the header icon reopens setup and session usage. No duplicate Start again/Details button is shown. An ended call hides the bar.
 
@@ -72,3 +96,9 @@ Edit `build_course.py` and run it to regenerate `course.json`, embedded index da
 GitHub Actions runs tests and publishes only public learner files through Pages. The server, token script, tests, source generator, package dependencies, and credentials are not uploaded as the Pages artifact. Enable Pages with GitHub Actions if the repository settings have not already enabled it.
 
 Tests verify course readiness, embedded parity, bounded slides, source mapping, quiz answers, all 139 rendered slides through a DOM environment, completion, reports, and mocked voice/token behavior. They do not establish rendered layout, real WebRTC transport, or actual microphone playback. Mobile Safari, larger displays, voice interruption, and AirPods need device review.
+
+## Voice rollout and monitoring
+
+Phase 1: deploy to Vercel and test login, hidden voice access, refresh, sign out and real session startup. Phase 2: investigate the reported audio cutoff while the session remains connected, including with microphone muted. The cutoff is **unresolved**; no timeout, audio or response-length behavior has been changed as part of the hosting migration.
+
+The voice modal includes **Connection diagnostics → Copy diagnostics**. These in-memory events record response completion/reason, connection state and audio playback/track events, never slide text, notes, transcript, API keys, cookies, SDP or recordings. Vercel function logs contain event, status, duration and a request ID. See [voice monitoring guide](docs/VOICE_MONITORING.md) for the first debugging exercise.
