@@ -54,7 +54,7 @@ node token.cjs
 
 Paste the printed `ek_` token into the hosted voice panel promptly; it has a 60-second connection window. Token expiry does not end a connected session. A permanent `sk-` key is rejected by the hosted page. An authenticated hosted token helper would remove this manual step and is a future deployment task; none is currently deployed.
 
-After connecting, use Enable microphone to talk or Read this slide to hear it. AirPods follow the browser/device's selected audio route; the site cannot force iOS output selection. Closing the panel, ending the session, hiding the page, or leaving stops tracks and closes the connection. Slide changes replace the supplied slide context; previous conversation turns may still refer to an earlier slide.
+After connecting, setup closes automatically and a compact nonmodal bar appears above the lesson. Use Enable microphone to talk or Read this slide to hear it while keeping the slide visible. You can navigate between slides during the conversation; the shared slide text updates. Details reopens setup, and closing setup preserves an already-connected call. Use End conversation to stop it. AirPods follow the browser/device's selected audio route; the site cannot force iOS output selection. Ending the session, hiding the page, or leaving stops tracks and closes the connection. Closing setup during connection cancels the attempt; closing it after connection only hides setup. Slide changes replace the supplied slide context; previous conversation turns may still refer to an earlier slide.
 
 ### Costs and limits
 

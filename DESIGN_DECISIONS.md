@@ -8,3 +8,12 @@
 - GitHub Pages accepts ephemeral credentials only. A localhost-only helper accepts an unsaved key or server environment key, verifies same-origin requests, and mints tokens. No shared public secret or unauthenticated hosted token service is deployed.
 - Default to a mini model, one-minute sessions, brief replies, manual microphone activation, an inactivity timeout and no automatic reconnection. Estimated costs are conservative usage feedback, not a guaranteed spending cap. Stop audio on close, backgrounding and navigation.
 - Verification: course/schema/source tests and DOM integration with all 139 slides; token helper and voice lifecycle tested with mocks. Real model calls, AirPods routing and mobile layout remain unverified. No billable calls were made.
+
+
+## Voice without an obstructing modal — 2026-10-18
+
+User reported that the active voice dialog covered the slide being discussed. The dialog now handles credentials and connection setup only. Once connected, it closes and a compact nonmodal voice bar is inserted after the learner header in normal document flow. It displays the current slide title, microphone state/session status, read-aloud action, Details, and End conversation. The persistent bar and audio element live outside the modal and remount after learner-shell rerenders.
+
+Closing setup during an established call hides setup without ending the call. Ending the conversation, leaving/backgrounding the page, or reaching the existing limits still stops tracks and closes WebRTC. Closing setup while connection is pending cancels setup. Slide changes update the current supplied text; no notes or hidden slides are added. The existing theme, course data and learner features are unchanged.
+
+Mocked tests verify auto-closing setup, continued connection after hiding, bar remounting, updated context, delegated microphone/read controls, and explicit End cleanup. No paid API call or rendered device verification was performed.
