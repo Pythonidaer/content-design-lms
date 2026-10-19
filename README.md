@@ -110,3 +110,7 @@ A server-setup error is not an incorrect-password result: configuration is check
 ### Voice dialog design
 
 The modal follows the three AI design reset files in [llm-instruction-toolkit](https://github.com/Pythonidaer/llm-instruction-toolkit/tree/main/design/ai-design-reset), reviewed at 8fcbf905152c911f2350b9bb6105a1ca3a3de5ab. Show the duration, a short privacy/cost notice and the Start action first. Transcript, usage and diagnostic detail are collapsed, while Sign out is a quiet footer action. Voice CSS has a single component section instead of accumulated overrides. Audio configuration and lifecycle are unchanged by this design pass.
+
+### Current-slide voice context
+
+The tutor receives an explicitly labelled heading and body. Navigation updates the session instructions and adds a reference item without requesting an answer. Read this slide captures the current slide again and includes that exact text in the read request. The tutor is instructed to use the supplied text without claiming to see screen pixels or asking for text that is already supplied. Prior slide conversation remains in session history; notes are excluded.
