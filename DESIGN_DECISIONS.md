@@ -33,3 +33,7 @@ Private browser diagnostics and structured metadata-only backend logs make the n
 ## Login visibility and actionable configuration errors — 2026-10-18
 
 Add a Show/Hide password button with aria-controls and aria-pressed. Reset masking on close and submit, and retain existing credential clearing. Surface only variable names and required minimum lengths for server configuration errors, never values. Distinguish server setup failures from incorrect-password responses and remind the owner to redeploy after environment changes.
+
+## Trace-confirmed response truncation — 2026-10-18
+
+The user's hosted trace shows incomplete/max_output_tokens while WebRTC stays connected, followed by drained audio and a later user-initiated End. Raise the shared speech response ceiling from 256 (768 for read-aloud) to 2,048 and use a single VoiceConfig constant in token sessions, browser updates and explicit readings. Keep short-answer instructions, session timers and cost estimates. Persist a clear incomplete-response notice across timer updates, expose the applied ceiling in diagnostic exports and clear the stale signed-out status after verified login. Test mocked incomplete responses and every configuration path; a real-device retest is still required.

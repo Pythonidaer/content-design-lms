@@ -73,7 +73,7 @@ Without the helper, the published site still accepts short-lived `ek_` tokens ge
 
 ### Costs and limits
 
-Default model: `gpt-realtime-2.1-mini`, verified in official OpenAI documentation on 2026-10-18. Default session: one minute; selectable maximum three minutes. Conversation replies are limited to 256 output tokens; an explicitly requested slide reading can use up to 768. The session stops after 30 seconds without activity or after approximately $0.10 in reported usage. Estimates are computed from response usage at the documented text/audio rates and conservatively do not apply cached discounts. Other fees or billing adjustments are not included. Usage arrives after turns, so the threshold can be exceeded. Client timers and estimates are convenience controls, **not a guaranteed billing cap**. No automatic reconnection or session restart occurs.
+Default model: `gpt-realtime-2.1-mini`, verified in official OpenAI documentation on 2026-10-18. Default session: one minute; selectable maximum three minutes. Conversation and read-aloud replies allow up to 2,048 output tokens, including audio. The prompt still requests two or three short sentences. This is a maximum, not a fixed charge or requested answer length. The session stops after 30 seconds without activity or after approximately $0.10 in reported usage. Estimates are computed from response usage at the documented text/audio rates and conservatively do not apply cached discounts. Other fees or billing adjustments are not included. Usage arrives after turns, so the threshold can be exceeded. Client timers and estimates are convenience controls, **not a guaranteed billing cap**. No automatic reconnection or session restart occurs.
 
 API access and billing are separate from a ChatGPT subscription. Use project-level spending controls where available and review actual API usage. Live API calls, real audio quality, model availability for your project, and AirPods routing have not been tested with a paid key in this environment. No billable model calls were made during development.
 
@@ -99,7 +99,7 @@ Tests verify course readiness, embedded parity, bounded slides, source mapping, 
 
 ## Voice rollout and monitoring
 
-Phase 1: deploy to Vercel and test login, hidden voice access, refresh, sign out and real session startup. Phase 2: investigate the reported audio cutoff while the session remains connected, including with microphone muted. The cutoff is **unresolved**; no timeout, audio or response-length behavior has been changed as part of the hosting migration.
+Phase 1: deploy to Vercel and test login, hidden voice access, refresh, sign out and real session startup. Phase 2: investigate the reported audio cutoff while the session remains connected, including with microphone muted. The first supplied hosted trace identified `response.done` → `incomplete` → `max_output_tokens`. The response budget has since been raised from 256 (768 for read-aloud) to 2,048 across helper, hosted session, browser updates and explicit readings. The fix needs a fresh real-device test; other audio/transport causes are not ruled out. No timeout behavior changed.
 
 The voice modal includes **Connection diagnostics → Copy diagnostics**. These in-memory events record response completion/reason, connection state and audio playback/track events, never slide text, notes, transcript, API keys, cookies, SDP or recordings. Vercel function logs contain event, status, duration and a request ID. See [voice monitoring guide](docs/VOICE_MONITORING.md) for the first debugging exercise.
 

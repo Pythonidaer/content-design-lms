@@ -1,6 +1,6 @@
 # Voice monitoring: first investigation
 
-The reported bug is still open: audio stops mid-word with AirPods and microphone muted while the session timer continues. Moving to Vercel removes the local helper dependency; it does not establish a fix for this symptom.
+The reported bug is still open: audio stops mid-word with AirPods and microphone muted while the session timer continues. The first hosted trace confirms a response limit: `response.done` was `incomplete` with `max_output_tokens` at 03:23:07.623 UTC, audio drained at 03:23:13.820, and the user ended the still-connected call at 03:23:26.260. This identifies the cause in that session. The output budget is now 2,048; verify with a fresh session before declaring the symptom resolved on the device. Moving to Vercel alone was not the fix.
 
 ## Establish the hosted workflow
 
@@ -31,3 +31,7 @@ Monitoring tells us whether requests succeeded and how long they took. Observabi
 Diagnostics are held in memory, reset at session start and capped at 160 events. They exclude transcripts, slide text, notes, keys, tokens, cookies, IP addresses, SDP and audio recordings. Copying diagnostics does not automatically upload them. Vercel server logs include only event name, request ID, status and duration. They do not receive browser audio/playback logs; share a copied trace explicitly to correlate it. Vercel logs cover token creation, not the ongoing peer-to-peer audio stream.
 
 Instance-local login/token throttling is not a durable global quota. Configure Vercel Firewall rules for login/API abuse protection and keep OpenAI project spending controls. No external analytics or monitoring subscription is added.
+
+## What this trace taught us
+
+The session remained connected after the response ended. Response generation finished at the configured token ceiling, then already-buffered audio played for about six more seconds. There was no track, peer or playback failure event before that cutoff. That is stronger evidence for generation truncation than an AirPods routing failure in this trace. Text and audio generation have output budgets; a short text-sized ceiling can be too small for speech. Raising the ceiling allows more generation and can increase actual spend, while brief-response instructions and existing session/spend controls remain in place.
