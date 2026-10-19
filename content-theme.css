@@ -36,3 +36,5 @@ html,body{background:#fff;color:#0b0c0c}#lms-root{font-family:Arial,Helvetica,sa
 @media(max-width:599px){#lms-root .lms-header .voice-launch{width:40px;min-width:40px;padding:8px}.voice-dialog{padding:20px}}
 #lms-root [data-voice-open][hidden]{display:none!important}
 #voice-login-submit{width:100%;background:#00703c;color:#fff;font-weight:700}#voice-login-status{font-size:14px}#voice-account{font-size:14px;color:#505a5f}#voice-logout{font-size:13px;min-height:36px;padding:6px 10px}#voice-diagnostics{white-space:pre-wrap;overflow-wrap:anywhere;font:11px/1.5 monospace;max-height:180px;overflow:auto}#voice-copy-diagnostics{font-size:13px}
+
+.voice-password-row{display:flex;align-items:stretch;gap:8px}.voice-password-row input{flex:1;min-width:0}.voice-password-row button{flex:0 0 auto;font-size:13px;white-space:nowrap;padding:8px 10px}.voice-password-row button[aria-pressed=true]{background:#e8f0f6}
