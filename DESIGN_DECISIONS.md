@@ -17,3 +17,9 @@ User reported that the active voice dialog covered the slide being discussed. Th
 Closing setup during an established call hides setup without ending the call. Ending the conversation, leaving/backgrounding the page, or reaching the existing limits still stops tracks and closes WebRTC. Closing setup while connection is pending cancels setup. Slide changes update the current supplied text; no notes or hidden slides are added. The existing theme, course data and learner features are unchanged.
 
 Mocked tests verify auto-closing setup, continued connection after hiding, bar remounting, updated context, delegated microphone/read controls, and explicit End cleanup. No paid API call or rendered device verification was performed.
+
+## Simpler voice controls and saved local key — 2026-10-18
+
+Use an accessible microphone SVG in the existing header icon family, with title and aria-label. Remove the duplicate Details/Start again control; the header icon is the sole setup entry. Hide the voice bar after the call ends. Shorten the modal and collapse the slide/transcript preview. Keep controls outside the modal during the call.
+
+Opt-in Save on this computer writes only through the localhost helper to an owner-only JSON config outside the checkout. Config GET exposes booleans, never credentials; DELETE removes the file. Only local origin and the exact production GitHub Pages origin can call helper endpoints. Browser local-network permission may be required; same-origin localhost remains a fallback. This supersedes the prior session-only-key design. No paid API calls are used in tests.

@@ -29,32 +29,23 @@ The white/black/blue/green/yellow palette is inspired by the GOV.UK Design Syste
 
 ## Voice setup
 
-The top **Talk about this slide** button opens an OpenAI Realtime WebRTC tutor. It receives only the current visible slide, not your notes, hidden slides, complete course, or ChatGPT history. It can discuss the slide or read it aloud. A transcript is available during the session. Voice is optional; all course content works without it.
+The header microphone icon opens voice setup. The tutor receives current visible slide text, not notes, hidden slides or ChatGPT history. Setup closes once connected so the slide stays visible. The active bar contains microphone, read-aloud and end controls; the header icon reopens setup and session usage. No duplicate Start again/Details button is shown. An ended call hides the bar.
 
-**GitHub Pages cannot run the secret-key helper. Never put a permanent OpenAI key into public source or browser storage.**
+### Save a key once on this computer
 
-### Simplest private setup: run locally
-
-Requires Node 22+.
+Requires Node 22+ on the same computer as the browser:
 
 ```sh
-npm install
 npm start
 ```
 
-Open http://127.0.0.1:8787. Select a slide, press Talk about this slide, and enter your API key into the local panel. The key is forwarded only to the helper on this computer to mint a short-lived token, then the field is cleared. It is not saved or logged. Alternatively set `OPENAI_API_KEY` in the helper's environment and leave the field blank. Credentials stay out of localStorage, course exports, and GitHub.
+Open either http://127.0.0.1:8787 or https://pythonidaer.github.io/content-design-lms/ . Click the microphone icon, paste your `sk-` key, select **Save on this computer**, and start a conversation. Later, leave the key blank to reuse it. Use **Remove saved key** in the same modal to delete the saved configuration. Saving is opt-in; leaving it unchecked uses the entered key only for that connection. No key is prefilled or returned to the page.
 
-### Using the hosted GitHub Pages course
+The helper stores plaintext JSON at `~/.config/content-design-lms/voice.json`, outside this repository, with owner-only file permissions on macOS/Linux. This is a simple local file, not encrypted storage or Keychain; protect your user account and backups. No permanent key enters localStorage, exports, logs, Git or the Pages artifact. `OPENAI_API_KEY` in the helper environment is also supported. Explicitly entered keys take priority, then environment, then the saved file.
 
-Create an ephemeral token on a trusted computer with `OPENAI_API_KEY` set in its environment:
+Keep `npm start` running while using the published site. Chrome may ask for permission to access devices on your local network; allow it for this site to reach the localhost helper. If the browser blocks this connection, use the local URL instead. The helper binds only to 127.0.0.1 and allows CORS only for its own local origin and `https://pythonidaer.github.io` (browser origins cannot distinguish different repository paths on the same GitHub Pages account). Other websites cannot mint tokens through it. A compromised trusted origin, local malware or extensions can still misuse access.
 
-```sh
-node token.cjs
-```
-
-Paste the printed `ek_` token into the hosted voice panel promptly; it has a 60-second connection window. Token expiry does not end a connected session. A permanent `sk-` key is rejected by the hosted page. An authenticated hosted token helper would remove this manual step and is a future deployment task; none is currently deployed.
-
-After connecting, setup closes automatically and a compact nonmodal bar appears above the lesson. Use Enable microphone to talk or Read this slide to hear it while keeping the slide visible. You can navigate between slides during the conversation; the shared slide text updates. Details reopens setup, and closing setup preserves an already-connected call. Use End conversation to stop it. AirPods follow the browser/device's selected audio route; the site cannot force iOS output selection. Ending the session, hiding the page, or leaving stops tracks and closes the connection. Closing setup during connection cancels the attempt; closing it after connection only hides setup. Slide changes replace the supplied slide context; previous conversation turns may still refer to an earlier slide.
+Without the helper, the published site still accepts short-lived `ek_` tokens generated with `node token.cjs`. The helper exchanges a permanent key for a token with a 60-second connection window; expiry does not terminate an established call. AirPods follow the selected system/browser audio route. Leaving/backgrounding the page or reaching the limits ends the call; closing setup during connection cancels it, while closing setup after connection preserves it. Slide changes update the supplied text, but past conversation turns may refer to earlier slides.
 
 ### Costs and limits
 
