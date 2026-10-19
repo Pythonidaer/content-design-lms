@@ -114,3 +114,7 @@ The modal follows the three AI design reset files in [llm-instruction-toolkit](h
 ### Current-slide voice context
 
 The tutor receives an explicitly labelled heading and body. Navigation updates the session instructions and adds a reference item without requesting an answer. Read this slide captures the current slide again and includes that exact text in the read request. The tutor is instructed to use the supplied text without claiming to see screen pixels or asking for text that is already supplied. Prior slide conversation remains in session history; notes are excluded.
+
+### Voice selection
+
+The default API voice is `cedar`, with a natural British English accent requested in the session instructions. This is an approximation rather than an exact match to a ChatGPT app voice; accent adherence and sound need listening review. Changes take effect in a new voice session after deployment and refresh.
