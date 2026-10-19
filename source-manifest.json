@@ -1,0 +1,255 @@
+{
+  "retrieved": "2026-10-18",
+  "scope": "Core content-design principles and the directly linked writing-standards planning/writing guidance. A to Z and technical A to Z are linked lookup references. Original summaries, original practice, no complete-site reproduction.",
+  "sources": [
+    {
+      "id": "understand",
+      "title": "Understand content design",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/plan-manage-content/understand-content-design/",
+      "lessonIds": [
+        "orientation",
+        "scope",
+        "capstone"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "standards",
+      "title": "Writing to GOV.UK standards",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/",
+      "lessonIds": [
+        "orientation",
+        "content-workflow",
+        "capstone"
+      ],
+      "coverage": "adapted-orientation"
+    },
+    {
+      "id": "needs",
+      "title": "Identify user needs",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/plan-manage-content/identify-user-needs/",
+      "lessonIds": [
+        "needs",
+        "evaluate"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "plan",
+      "title": "Plan new GOV.UK content",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/plan-manage-content/plan-new-govuk-content/",
+      "lessonIds": [
+        "scope",
+        "planning"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "manage",
+      "title": "Manage existing GOV.UK content",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/plan-manage-content/manage-existing-govuk-content/",
+      "lessonIds": [
+        "maintenance"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "access",
+      "title": "Understand accessibility",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/plan-manage-content/understand-accessibility/",
+      "lessonIds": [
+        "accessibility"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "urls",
+      "title": "Follow URL standards",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/plan-manage-content/follow-url-standards/",
+      "lessonIds": [
+        "urls"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "localise",
+      "title": "Consider translations",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/plan-manage-content/consider-translations/",
+      "lessonIds": [
+        "translations"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "group",
+      "title": "Organise and group GOV.UK content",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/plan-manage-content/organise-group-govuk-content/",
+      "lessonIds": [
+        "planning"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "retire",
+      "title": "Retire outdated content",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/plan-manage-content/retire-content/",
+      "lessonIds": [
+        "retirement"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "change",
+      "title": "Help users prepare for change",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/help-users-prepare-change/",
+      "lessonIds": [
+        "changes"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "tools",
+      "title": "Find tools and resources for analysing content",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/find-tools-resources/",
+      "lessonIds": [
+        "evaluate"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "write",
+      "title": "Write content to meet user needs",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/meet-user-needs/",
+      "lessonIds": [
+        "content-workflow"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "structure",
+      "title": "Create a clear structure",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/clear-structure/",
+      "lessonIds": [
+        "structure"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "language",
+      "title": "Use clear language",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/clear-language/",
+      "lessonIds": [
+        "language"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "govtone",
+      "title": "Use the right tone",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/right-tone/",
+      "lessonIds": [
+        "gov-voice"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "links",
+      "title": "Write effective links",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/add-links/",
+      "lessonIds": [
+        "links"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "titles",
+      "title": "Write clear titles",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/clear-titles/",
+      "lessonIds": [
+        "titles"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "summaries",
+      "title": "Write clear summaries",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/summaries/",
+      "lessonIds": [
+        "summaries"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "notes",
+      "title": "Write change notes",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/writing-guidelines/change-notes/",
+      "lessonIds": [
+        "change-notes"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "style",
+      "title": "How to use the style guide",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/style-guides/how-to-use/",
+      "lessonIds": [
+        "style-guides"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "az",
+      "title": "A to Z style guide",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/style-guides/a-to-z-style-guide/",
+      "lessonIds": [
+        "style-guides"
+      ],
+      "coverage": "reference"
+    },
+    {
+      "id": "techaz",
+      "title": "Technical A to Z style guide",
+      "url": "https://guidance.publishing.service.gov.uk/writing-to-gov-uk-standards/style-guides/technical-a-to-z/",
+      "lessonIds": [
+        "style-guides"
+      ],
+      "coverage": "reference"
+    },
+    {
+      "id": "dimensions",
+      "title": "NN/g: Four Dimensions of Tone of Voice",
+      "url": "https://www.nngroup.com/articles/tone-of-voice-dimensions/",
+      "lessonIds": [
+        "tone-dimensions"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "samples",
+      "title": "NN/g: Tone-of-Voice Samples",
+      "url": "https://www.nngroup.com/articles/tone-voice-samples/",
+      "lessonIds": [
+        "tone-testing"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "words",
+      "title": "NN/g: Tone-of-Voice Words",
+      "url": "https://www.nngroup.com/articles/tone-voice-words/",
+      "lessonIds": [
+        "tone-testing"
+      ],
+      "coverage": "adapted"
+    },
+    {
+      "id": "mailchimp",
+      "title": "Mailchimp: Voice and Tone",
+      "url": "https://styleguide.mailchimp.com/voice-and-tone/",
+      "lessonIds": [
+        "voice-tone"
+      ],
+      "coverage": "adapted"
+    }
+  ]
+}
