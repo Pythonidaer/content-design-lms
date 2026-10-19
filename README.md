@@ -118,3 +118,5 @@ The tutor receives an explicitly labelled heading and body. Navigation updates t
 ### Voice selection
 
 The default API voice is `cedar`, with a natural British English accent requested in the session instructions. This is an approximation rather than an exact match to a ChatGPT app voice; accent adherence and sound need listening review. Changes take effect in a new voice session after deployment and refresh.
+
+The voice modal includes all ten Realtime voices. Cedar is selected initially; choose another voice before starting a conversation. The selection is locked during connection and playback. End the conversation to select another. The British English accent instruction applies to every choice, so these are not neutral voice previews. No automatic paid preview calls are made.

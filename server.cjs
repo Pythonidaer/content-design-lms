@@ -30,7 +30,7 @@ return http.createServer(async(req,res)=>{
   res.setHeader('Cache-Control','no-store');
   if(req.method!=='POST'||!String(req.headers['content-type']).startsWith('application/json')){res.writeHead(403);res.end('JSON POST required.');return}
   try{const input=await inputJSON();const key=String(input.apiKey||apiKey||await savedKey()||'').trim();if(!key.startsWith('sk-')){res.writeHead(400,{'Content-Type':'application/json'});res.end(JSON.stringify({error:'An OpenAI API key is required on the local helper.'}));return}
-   const r=await apiFetch('https://api.openai.com/v1/realtime/client_secrets',{method:'POST',headers:{Authorization:'Bearer '+key,'Content-Type':'application/json'},body:JSON.stringify({expires_after:{anchor:'created_at',seconds:60},session:session(input.context)}),signal:AbortSignal.timeout(12000)});
+   const r=await apiFetch('https://api.openai.com/v1/realtime/client_secrets',{method:'POST',headers:{Authorization:'Bearer '+key,'Content-Type':'application/json'},body:JSON.stringify({expires_after:{anchor:'created_at',seconds:60},session:session(input.context,input.voice)}),signal:AbortSignal.timeout(12000)});
    if(!r.ok){res.writeHead(r.status===401?401:502,{'Content-Type':'application/json'});res.end(JSON.stringify({error:'Could not create voice token. Check API credentials, billing, and model access.'}));return}
    const data=await r.json();res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify({value:data.value,expires_at:data.expires_at}));
   }catch{res.writeHead(400,{'Content-Type':'application/json'});res.end(JSON.stringify({error:'Could not create the session. Check input or try again.'}))}return;

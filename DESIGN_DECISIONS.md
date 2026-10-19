@@ -49,3 +49,7 @@ Keep capability wording precise: the tutor receives slide text, not screen pixel
 ## British English voice delivery
 
 Use the supported Cedar API voice and request a natural British English accent with warm, calm delivery. Treat this as an approximation, not an exact ChatGPT voice mapping or a verified best match. Keep the teaching prompt, token ceiling and session controls. Voice is selected when a session is created; existing sessions must be ended and restarted to hear the change. Automated checks cannot validate accent quality.
+
+## Voice selection
+
+Add a native Voice select next to the existing duration row, populated from a shared ten-voice allowlist with Cedar as default. Pass the selected voice through hosted and local token creation, enforce the allowlist server-side, and set the same output voice on initial browser session setup for manually supplied tokens. Lock selection until the current call ends; do not send voice changes on subsequent slide updates. Include the selected voice in metadata-only diagnostic exports. Retain the British English accent instruction for all selections and make no automatic billable preview calls.
