@@ -53,3 +53,7 @@ Use the supported Cedar API voice and request a natural British English accent w
 ## Voice selection
 
 Add a native Voice select next to the existing duration row, populated from a shared ten-voice allowlist with Cedar as default. Pass the selected voice through hosted and local token creation, enforce the allowlist server-side, and set the same output voice on initial browser session setup for manually supplied tokens. Lock selection until the current call ends; do not send voice changes on subsequent slide updates. Include the selected voice in metadata-only diagnostic exports. Retain the British English accent instruction for all selections and make no automatic billable preview calls.
+
+## Two-voice shortlist
+
+Limit the shared voice allowlist and modal choices to Alloy and Shimmer, with Alloy selected initially. This supersedes the earlier ten-voice list and Cedar default. Hosted/local validation and new-session-only changes continue to use that shared configuration. Keep the existing British English delivery instruction.
